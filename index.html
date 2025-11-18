@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire 4 étapes</title>
+  <style>
+    :root {
+      --bg: #f8f9fb;
+      --text: #1f2933;
+      --accent: #4f46e5;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px;
+    }
+
+    .form-wrapper {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      padding: 32px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    p.subtitle {
+      margin: 0 0 24px;
+      color: #4b5563;
+    }
+
+    .step {
+      display: none;
+      opacity: 0;
+      transition: opacity 250ms ease;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .step.fade-in {
+      opacity: 1;
+    }
+
+    .question {
+      margin-bottom: 16px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    label.option {
+      display: block;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+      accent-color: var(--accent);
+    }
+
+    input[type="radio"]:focus-visible + span,
+    label.option:hover {
+      border-color: var(--accent);
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.12);
+    }
+
+    .actions {
+      margin-top: 22px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button {
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.2);
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .status {
+      margin-top: 20px;
+      font-weight: 600;
+      color: #065f46;
+      background: #ecfdf3;
+      border: 1px solid #bbf7d0;
+      padding: 12px 14px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .error {
+      color: #991b1b;
+      background: #fef2f2;
+      border-color: #fecdd3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-wrapper">
+    <h1>Formulaire rapide</h1>
+    <p class="subtitle">Réponds à ces 4 questions pour que nous puissions t'aider.</p>
+
+    <section id="step1" class="step active fade-in" aria-live="polite">
+      <div class="question">As-tu déjà une assurance hypothécaire ?</div>
+      <div class="options">
+        <label class="option">
+          <input type="radio" name="assurance" value="oui"> <span>Oui</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="assurance" value="non"> <span>Non</span>
+        </label>
+      </div>
+      <div class="actions">
+        <button type="button" data-next="step2">Suivant</button>
+      </div>
+    </section>
+
+    <section id="step2" class="step" aria-live="polite">
+      <div class="question">Quelle est ta tranche d'âge ?</div>
+      <div class="options">
+        <label class="option"><input type="radio" name="age" value="18-24"> <span>18–24</span></label>
+        <label class="option"><input type="radio" name="age" value="25-34"> <span>25–34</span></label>
+        <label class="option"><input type="radio" name="age" value="35-44"> <span>35–44</span></label>
+        <label class="option"><input type="radio" name="age" value="45-54"> <span>45–54</span></label>
+        <label class="option"><input type="radio" name="age" value="55+"> <span>55+</span></label>
+      </div>
+      <div class="actions">
+        <button type="button" data-next="step3">Suivant</button>
+      </div>
+    </section>
+
+    <section id="step3" class="step" aria-live="polite">
+      <div class="question">Combien reste-t-il à payer sur ton hypothèque ?</div>
+      <div class="options">
+        <label class="option"><input type="radio" name="montant" value="moins de 150k"> <span>Moins de 150k</span></label>
+        <label class="option"><input type="radio" name="montant" value="150-300k"> <span>150–300k</span></label>
+        <label class="option"><input type="radio" name="montant" value="300-500k"> <span>300–500k</span></label>
+        <label class="option"><input type="radio" name="montant" value="500k+"> <span>500k+</span></label>
+      </div>
+      <div class="actions">
+        <button type="button" data-next="step4">Suivant</button>
+      </div>
+    </section>
+
+    <section id="step4" class="step" aria-live="polite">
+      <div class="question">Quel est ton objectif principal ?</div>
+      <div class="options">
+        <label class="option"><input type="radio" name="objectif" value="payer moins cher"> <span>Payer moins cher</span></label>
+        <label class="option"><input type="radio" name="objectif" value="meilleure protection"> <span>Meilleure protection</span></label>
+        <label class="option"><input type="radio" name="objectif" value="comparer avec ma banque"> <span>Comparer avec ma banque</span></label>
+        <label class="option"><input type="radio" name="objectif" value="pas certain"> <span>Pas certain</span></label>
+      </div>
+      <div class="actions">
+        <button type="button" id="submitForm">Soumettre</button>
+      </div>
+    </section>
+
+    <div id="status" class="status" role="status"></div>
+  </div>
+
+  <script>
+    // Airtable configuration - remplacer ces valeurs.
+    const AIRTABLE_API_KEY = "VOTRE_CLE_API";
+    const AIRTABLE_BASE_ID = "VOTRE_BASE_ID";
+    const AIRTABLE_TABLE_NAME = "VOTRE_TABLE";
+
+    const formData = {
+      assurance: "",
+      age: "",
+      montant: "",
+      objectif: "",
+    };
+
+    const steps = Array.from(document.querySelectorAll(".step"));
+    const statusEl = document.getElementById("status");
+
+    const showStep = (nextId) => {
+      steps.forEach((section) => {
+        section.classList.remove("active", "fade-in");
+      });
+      const nextSection = document.getElementById(nextId);
+      if (nextSection) {
+        nextSection.classList.add("active");
+        // Force reflow to trigger the transition.
+        void nextSection.offsetWidth;
+        nextSection.classList.add("fade-in");
+      }
+    };
+
+    const getSelectedValue = (name) => {
+      const field = document.querySelector(`input[name="${name}"]:checked`);
+      return field ? field.value : "";
+    };
+
+    const requireAnswer = (name) => {
+      const value = getSelectedValue(name);
+      if (!value) {
+        statusEl.textContent = "Merci de sélectionner une réponse avant de continuer.";
+        statusEl.className = "status error";
+        statusEl.style.display = "block";
+        return false;
+      }
+      statusEl.style.display = "none";
+      return value;
+    };
+
+    document.querySelectorAll("button[data-next]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const currentStep = btn.closest("section");
+        const fieldName = currentStep.querySelector("input[type=radio]").name;
+        const answer = requireAnswer(fieldName);
+        if (!answer) return;
+
+        formData[fieldName] = answer;
+        showStep(btn.dataset.next);
+      });
+    });
+
+    document.getElementById("submitForm").addEventListener("click", async () => {
+      const answer = requireAnswer("objectif");
+      if (!answer) return;
+      formData.objectif = answer;
+
+      statusEl.textContent = "Envoi en cours...";
+      statusEl.className = "status";
+      statusEl.style.display = "block";
+
+      try {
+        const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fields: {
+              Assurance: formData.assurance,
+              Age: formData.age,
+              Montant: formData.montant,
+              Objectif: formData.objectif,
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur API (${response.status})`);
+        }
+
+        statusEl.textContent = "Merci, nous allons communiquer avec toi sous peu.";
+        statusEl.className = "status";
+        // Optionally disable form interactions after success.
+        document.querySelectorAll("button").forEach((btn) => (btn.disabled = true));
+      } catch (error) {
+        statusEl.textContent = "Une erreur est survenue lors de l'envoi. Merci de réessayer.";
+        statusEl.className = "status error";
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
